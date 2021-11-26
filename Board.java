@@ -1,6 +1,7 @@
 import java.lang.Math;
 import java.util.Arrays;
 
+
 public class Board
 {
   private int[][] tiles; // Array of tile values
@@ -17,15 +18,15 @@ public class Board
   }
   public Board(String tilesSerial)
   {
-    size = (int) Math.floor(Math.sqrt(tilesSerial.length()));
-    tiles = new int[size][size];
     String[] t = tilesSerial.split(" ");
+    size = (int) Math.floor(Math.sqrt(t.length));
+    tiles = new int[size][size];
 
     for (int j=0;j<size;j++)
     {
       for (int i=0;i<size;i++)
       {
-        tiles[j][i]=Integer.parseInt(t[j*size+i]);
+        tiles[i][j]=Integer.parseInt(t[j*size+i]);
       }
     }
   }
@@ -37,7 +38,7 @@ public class Board
     {
       for (int i=0;i<size;i++)
       {
-        result+=tiles[j][i] + " ";
+        result+=tiles[i][j] + " ";
       }
     }
     return result;
@@ -49,5 +50,34 @@ public class Board
       if (!Arrays.equals(tiles[i], b.tiles[i])) return false;
     }
     return true;
+  }
+
+  private int vecDistance(int[] a, int[] b)
+  {
+    return Math.abs(b[0]-a[0])+Math.abs(b[1]-a[1]);
+  }
+  private int[] targetPos(int a)
+  {
+    if (a <= 0) return new int[] {size-1,size-1};
+    int x = (a-1)%size;
+    int y = Math.floorDiv(a-1, size);
+    return new int[]{x,y};
+  }
+
+  public int manatthan()
+  {
+    int sum = 0;
+    for (int j=0;j<size;j++)
+    {
+      for (int i=0;i<size;i++)
+      {
+        int num = tiles[i][j];
+        int[] target = targetPos(num);
+        int dist = vecDistance(new int[]{i,j}, target);
+        System.out.println(num + " (" + target[0] + " " + target[1] + ") " + dist);
+        if (num>0) sum += dist;
+      }
+    }
+    return sum;
   }
 }
