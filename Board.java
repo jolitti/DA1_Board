@@ -2,7 +2,7 @@ import java.lang.Math;
 import java.util.Arrays;
 
 
-public class Board
+public class Board implements Comparable<Board>
 {
   private int[][] tiles; // Array of tile values
   private int size;      // Side length
@@ -41,6 +41,8 @@ public class Board
         result+=tiles[i][j] + " ";
       }
     }
+    int resLen = result.length();
+    result = result.substring(0, resLen-1);
     return result;
   }
 
@@ -74,10 +76,22 @@ public class Board
         int num = tiles[i][j];
         int[] target = targetPos(num);
         int dist = vecDistance(new int[]{i,j}, target);
-        System.out.println(num + " (" + target[0] + " " + target[1] + ") " + dist);
+        //System.out.println(num + " (" + target[0] + " " + target[1] + ") " + dist);
         if (num>0) sum += dist;
       }
     }
     return sum;
+  }
+
+  public int compareTo(Board b)
+  {
+    return this.manatthan() - b.manatthan();
+  }
+
+  public Board[] getMoves()
+  {
+    //TODO
+
+    return null;
   }
 }
