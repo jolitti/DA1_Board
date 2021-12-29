@@ -195,6 +195,8 @@ public class Board {
 
     public String toString() {return repr;}
     public int manhattan() {return manhattan;}
+    public int size() { return size; }
+    public boolean equals(Board b) { return repr.equals(b.repr);}
 
     public Board[] nextMoves()
     {
