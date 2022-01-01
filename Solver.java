@@ -3,6 +3,7 @@ import java.io.FileNotFoundException;
 import java.util.Scanner;
 import java.util.PriorityQueue;
 import java.util.HashSet;
+import java.util.ArrayList;
 
 public class Solver {
 
@@ -27,6 +28,19 @@ public class Solver {
             key = state.manhattan() + step;
         }
         public int compareTo(Entry e) {return key - e.key;}
+
+        public ArrayList<String> descendanceLine()
+        {
+            ArrayList<String> ans = new ArrayList<>();
+            Entry e = this;
+            while (e != null)
+            {
+                ans.add(0, e.state.toString());
+                e = e.parent;
+            }
+
+            return ans;
+        }
     }
 
     private Board startBoard;
@@ -80,6 +94,10 @@ public class Solver {
 
             Entry e = solver.solve();
             System.out.println(e.step);
+
+            for (String s : e.descendanceLine()) {
+                System.out.println(s);
+            }
         }
         catch (FileNotFoundException e)
         {
